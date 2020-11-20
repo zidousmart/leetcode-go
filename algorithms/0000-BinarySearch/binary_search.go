@@ -13,7 +13,7 @@ func main() {
 	fmt.Println("------")
 
 	arrLeft := []int{1, 3, 7, 10, 15, 15, 15, 33, 68, 79}
-	target = 15
+	target = 3
 	fmt.Println(leftBoard(arrLeft, target))
 	target = 19
 	fmt.Println(leftBoard(arrLeft, target))
@@ -32,8 +32,8 @@ func binarySearch(arr []int, target int) int {
 	left := 0
 	right := len(arr) - 1
 	for left <= right {
-		mid := (right + left) / 2
-		// mid := left + (right-left)/2
+		// mid := (right + left) / 2
+		mid := left + (right-left)/2
 		if arr[mid] == target {
 			return mid
 		} else if arr[mid] < target {
@@ -50,52 +50,46 @@ func binarySearch(arr []int, target int) int {
 // 左闭右开区间 [left, right)
 func leftBoard(arr []int, target int) int {
 	left := 0
-	right := len(arr)
-	for left < right {
-		mid := (right + left) / 2
-		// mid := left + (right-left)/2
+	right := len(arr) - 1
+	for left <= right {
+		// mid := (right + left) / 2
+		mid := left + (right-left)/2
 		if arr[mid] == target {
-			right = mid // 收紧右侧边界以锁定左侧边界
+			right = mid - 1 // 收紧右侧边界以锁定左侧边界
 		} else if arr[mid] < target {
 			left = mid + 1
 		} else {
-			right = mid
+			right = mid - 1
 		}
 	}
 
-	if left == len(arr) {
+	if left == len(arr) || arr[left] != target {
 		return -1
 	}
-	if arr[left] == target {
-		return left
-	}
 
-	return -1
+	return left
 }
 
 // 二分查找右侧边界
 // 左闭右开区间 [left, right)
 func rightBoard(arr []int, target int) int {
 	left := 0
-	right := len(arr)
-	for left < right {
-		mid := (right + left) / 2
-		// mid := left + (right-left)/2
+	right := len(arr) - 1
+	for left <= right {
+		// mid := (right + left) / 2
+		mid := left + (right-left)/2
 		if arr[mid] == target {
 			left = mid + 1 // 收紧左侧边界以锁定右侧边界
 		} else if arr[mid] < target {
 			left = mid + 1
 		} else {
-			right = mid
+			right = mid - 1
 		}
 	}
 
-	if left == 0 {
+	if right < 0 || arr[right] != target {
 		return -1
 	}
-	if arr[left-1] == target {
-		return left - 1
-	}
 
-	return -1
+	return right
 }
