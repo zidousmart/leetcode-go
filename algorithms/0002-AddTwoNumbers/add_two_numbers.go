@@ -24,7 +24,20 @@ func main() {
 	s2 := addTwoNumbers(nums3, nums4)
 	fmt.Println(s2)
 	fmt.Println(sliceToInt(s2))
+	fmt.Println("------")
+	fmt.Println("------")
 
+	l1 := kit.TailInsert(1, nil)
+	l1 = kit.TailInsert(2, l1)
+	l1 = kit.TailInsert(3, l1)
+	kit.PrintList(l1)
+	l2 := kit.TailInsert(1, nil)
+	l2 = kit.TailInsert(2, l2)
+	l2 = kit.TailInsert(9, l2)
+	kit.PrintList(l2)
+	la1 := listAddTwoNumbers(l1, l2)
+	kit.PrintList(la1)
+	fmt.Println("------")
 }
 
 func intToSlice(n int) []int {
@@ -93,7 +106,10 @@ func addTwoNumbers(nums1, nums2 []int) []int {
 }
 
 func listAddTwoNumbers(l1 *kit.ListNode, l2 *kit.ListNode) *kit.ListNode {
-	head := &ListNode{0, nil}
+	head := &kit.ListNode{
+		Val:  0,
+		Next: nil,
+	}
 	current := head
 	carry := 0
 	for l1 != nil || l2 != nil || carry > 0 {
@@ -106,10 +122,14 @@ func listAddTwoNumbers(l1 *kit.ListNode, l2 *kit.ListNode) *kit.ListNode {
 			sum += l2.Val
 			l2 = l2.Next
 		}
+
 		carry = sum / 10
-		current.Next = new(ListNode)
-		current.Next.Val = sum % 10
+		current.Next = &kit.ListNode{
+			Val:  sum % 10,
+			Next: nil,
+		}
 		current = current.Next
 	}
+
 	return head.Next
 }
