@@ -22,6 +22,10 @@ func main() {
 }
 
 func validParentheses(s string) bool {
+	m := make(map[uint8]uint8)
+	m[')'] = '('
+	m[']'] = '['
+	m['}'] = '{'
 	stack := make([]uint8, 0, len(s))
 	top := 0
 	has := false
@@ -32,31 +36,15 @@ func validParentheses(s string) bool {
 			top++
 			has = true
 
-		case ')':
+		case ')', ']', '}':
 			if len(stack) == 0 {
 				return false
 			}
-			if stack[len(stack)-1] != '(' {
+			c, ok := m[s[i]]
+			if !ok {
 				return false
 			}
-			stack = stack[:len(stack)-1]
-			top--
-
-		case ']':
-			if len(stack) == 0 {
-				return false
-			}
-			if stack[len(stack)-1] != '[' {
-				return false
-			}
-			stack = stack[:len(stack)-1]
-			top--
-
-		case '}':
-			if len(stack) == 0 {
-				return false
-			}
-			if stack[len(stack)-1] != '{' {
+			if stack[len(stack)-1] != c {
 				return false
 			}
 			stack = stack[:len(stack)-1]
