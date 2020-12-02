@@ -4,6 +4,7 @@ import (
 	"fmt"
 )
 
+// 找到没有重复的最长子串(substring)
 func main() {
 	s1 := "abc123adf"
 	fmt.Println(longestSubStringWithoutRepeating1(s1))
